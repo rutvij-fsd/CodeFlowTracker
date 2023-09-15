@@ -13,6 +13,7 @@ function App() {
     
     const graph = new Graph();
     await displayGraphWithCode(graph, occurrences);
+    console.log("++++graph++++",graph)
     }
   useEffect(() => {
     runAnalysis();
