@@ -10,10 +10,17 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@babel/parser": "^7.22.16",
+    "@babel/traverse": "^7.22.19",
+    "axios": "^1.5.0",
+    "buffer": "^6.0.3",
+    "graphlib": "^2.1.8",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
+    "@types/babel__traverse": "^7.20.1",
+    "@types/graphlib": "^2.1.8",
     "@types/react": "^18.2.15",
     "@types/react-dom": "^18.2.7",
     "@typescript-eslint/eslint-plugin": "^6.0.0",
