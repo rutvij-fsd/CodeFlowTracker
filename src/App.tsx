@@ -12,8 +12,8 @@ function App() {
     displayResults(occurrences);
     
     const graph = new Graph();
-    await displayGraphWithCode(graph, occurrences);
-    console.log("++++graph++++",graph)
+    const graphObj = await displayGraphWithCode(graph, occurrences);
+    console.log("++++graph++++",graphObj)
     }
   useEffect(() => {
     runAnalysis();

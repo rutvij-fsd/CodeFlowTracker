@@ -13,13 +13,15 @@ export function displayResults(occurrences: Occurrence[]): void {
     });
 }
 
-export async function displayGraphWithCode(graph: Graph, occurrences: Occurrence[]): Promise<void> {
-    for (let occurrence of occurrences) {
-        if (occurrence.function !== "Global/Outside Function") {
-            let functionUsages = await analyzeFunctionUsage(occurrence.function);
-            functionUsages.forEach(usage => {
-                graph.setEdge(occurrence.file, usage.file, usage.callCode);
-            });
+export async function displayGraphWithCode(graph: Graph, occurrences: Occurrence[]): Promise<Graph> {
+
+    for (const [key, value] of Object.entries(occurrences)) {
+        graph.setNode(key, value);
+      }
+      for (const [key, value] of Object.entries(occurrences)) {
+        for (const [key2, value2] of Object.entries(value)) {
+          graph.setEdge(key, key2, value2);
         }
-    }
+      }
+    return graph;
 }
