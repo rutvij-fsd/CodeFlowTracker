@@ -1,32 +1,21 @@
-import { useEffect, useState } from "react";
-import { displayGraphWithCode, displayResults } from "./utils/display";
-import { findOccurrences } from "./utils/tracker";
-import { Graph } from 'graphlib';
+import Home from "./component/Home";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import UserContextProvider from "./contexts/userContexts";
+import NodeGraph from "./component/NodeGraphData";
 
 function App() {
-
-  const [count, setCount] = useState(0)
-  const searchString = "searchString"; 
-  async function runAnalysis() {
-    const occurrences = await findOccurrences(searchString);
-    displayResults(occurrences);
-    
-    const graph = new Graph();
-    const graphObj = await displayGraphWithCode(graph, occurrences);
-    console.log("++++graph++++",graphObj)
-    }
-  useEffect(() => {
-    runAnalysis();
-  }
-  , [ count]);
   return (
     <>
-    <h1 className="text-3xl font-bold">
-      Hello world!
-    </h1>
-    <button onClick={() => setCount(count + 1)} className="">Click me! {`Counter ${count}`}</button>
+      <Router>
+        <UserContextProvider>
+          <Routes>
+            <Route path="" element={<Home />} />
+            <Route path="/results" element={<NodeGraph />} />
+          </Routes>
+        </UserContextProvider>
+      </Router>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
