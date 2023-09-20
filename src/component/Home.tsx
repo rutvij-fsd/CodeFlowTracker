@@ -14,7 +14,7 @@ const HomeForm = () => {
   const navigation = useNavigate();
 
   const [githubUsername, setGithubUsername] = useState("rutvij-fsd");
-  const [githubRepoName, setGithubRepoName] = useState("test-flow-project");
+  const [githubRepoName, setGithubRepoName] = useState("CodeFlowTracker");
   const [searchString, setSearchString] = useState("axiosInstance");
   const [publicChecked, setPublicChecked] = useState(false);
   const [isLoading, setLoading] = useState(false);
