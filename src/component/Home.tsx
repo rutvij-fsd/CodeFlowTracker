@@ -1,5 +1,5 @@
 import { Button, Checkbox, FormControlLabel, TextField } from "@mui/material";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { updateBaseURL } from "../constants/Generals";
 import { findOccurrences } from "../utils/tracker";
 import { Graph } from "graphlib";
@@ -7,15 +7,18 @@ import { displayGraphWithCode } from "../utils/display";
 import { UserContext, UserContextType } from "../contexts/userContexts";
 import ProgressLoader from "./Loader";
 import { useNavigate } from "react-router-dom";
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 const HomeForm = () => {
   const { astDataState } = useContext(UserContext) as UserContextType;
-  const [astData, setAstData] = astDataState;
+  const [_,setAstData] = astDataState;
   const navigation = useNavigate();
 
   const [githubUsername, setGithubUsername] = useState("rutvij-fsd");
   const [githubRepoName, setGithubRepoName] = useState("CodeFlowTracker");
-  const [searchString, setSearchString] = useState("axiosInstance");
+  const [searchString, setSearchString] = useState("navigation");
   const [publicChecked, setPublicChecked] = useState(false);
   const [isLoading, setLoading] = useState(false);
 
@@ -33,16 +36,22 @@ const HomeForm = () => {
   };
 
   const runAnalysis = async () => {
-    const occurrences = await findOccurrences(searchString);
-    const graph = new Graph();
-    const graphObj = await displayGraphWithCode(graph, occurrences);
-    setAstData(graphObj);
-    navigation("/results");
+    try {
+      const occurrences = await findOccurrences(searchString);
+      console.log(occurrences);
+      if(occurrences.length === 0) {
+        throw new Error("No occurrences found");
+      }
+      
+      const graph = new Graph();
+      const graphObj = await displayGraphWithCode(graph, occurrences);
+      setAstData(graphObj);
+      navigation("/results");   
+    } catch (error) {
+      toast.error("Error during analysis");
+    }
   };
 
-  useEffect(() => {
-    console.log("astData", astData);
-  }, [astData]);
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-teal-100">
